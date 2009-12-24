@@ -1,0 +1,33 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:zojax="http://namespaces.zope.org/zojax"
+   i18n_domain="zojax.contenttypes">
+
+  <zojax:permission
+     permission="zojax.contenttype.AddNewsItem"
+     category="zojax.content.permissions.interfaces.IAddPermission" />
+
+  <zojax:permission
+     permission="zojax.contenttype.SubmitNewsItem"
+     category="zojax.content.permissions.interfaces.ISubmitPermission" />
+
+  <zojax:contentpermission
+     contenttype="contenttype.newsitem"
+     permission="zojax.contenttype.AddNewsItem"
+     managepermission="zojax.ManageContentPermission"
+     class="zojax.content.permissions.content.ContentPermission"
+     category="zojax.content.permissions.interfaces.IAddPermission" />
+
+  <zojax:contentpermission
+     contenttype="contenttype.newsitem"
+     permission="zojax.contenttype.SubmitNewsItem"
+     managepermission="zojax.ManageContentPermission"
+     class="zojax.content.permissions.content.ContentPermission"
+     category="zojax.content.permissions.interfaces.ISubmitPermission" />
+
+  <zojax:draft
+     content="contenttype.newsitem"
+     publish="zojax.contenttype.AddNewsItem"
+     submit="zojax.contenttype.SubmitNewsItem" />
+
+</configure>

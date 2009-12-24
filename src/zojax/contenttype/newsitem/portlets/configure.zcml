@@ -1,0 +1,30 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:zojax="http://namespaces.zope.org/zojax"
+   i18n_domain="zojax.contenttypes">
+
+  <zojax:portlet
+     name="contenttypes.newsitems"
+     title="News Items"
+     description="Information about latest site news."
+     class=".items.NewsItemsPortlet"
+     schema=".interfaces.INewsItemsPortlet" />
+
+  <zojax:pagelet
+     type="portlet.view"
+     for=".interfaces.INewsItemsPortlet"
+     template="items.pt" />
+
+  <zojax:portlet
+     name="contenttypes.newscategories"
+     title="News Categories"
+     description="Listing of news categories."
+     class=".category.NewsCategoriesPortlet"
+     template="category.pt" />
+
+  <utility
+     name="newsitem.portlet.sources"
+     component=".vocabulary.sourcesVocabulary"
+     provides="zope.schema.interfaces.IVocabularyFactory" />
+
+</configure>

@@ -1,0 +1,8 @@
+<tal:block i18n:domain="zojax.contenttypes">
+  <tal:block content="structure pagelet:+context.actions" />
+  <h1 class="z-content-title" i18n:translate="">News</h1>
+  <br />
+
+  <tal:content content="structure pagelet:+newslisting" />
+
+</tal:block>

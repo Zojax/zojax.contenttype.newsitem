@@ -1,0 +1,83 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:zojax="http://namespaces.zope.org/zojax"
+   xmlns:browser="http://namespaces.zope.org/browser"
+   i18n_domain="zojax.contenttypes">
+
+  <!-- news -->
+  <browser:defaultView
+     name="index.html"
+     for="..interfaces.INewsWorkspace" />
+
+  <zojax:pagelet
+     name="index.html"
+     for="..interfaces.INewsWorkspace"
+     template="news.pt"
+     permission="zope.View" />
+
+  <zojax:pagelet
+     type="pagelet"
+     name="newslisting"
+     for="..interfaces.INewsWorkspace"
+     template="newslisting.pt"
+     class=".newsmodel.NewsListing"
+     permisison="zope.View" />
+
+  <browser:icon
+     name="zmi_icon"
+     file="newspaper.png"
+     for="..interfaces.INewsWorkspace" />
+
+  <browser:icon
+     name="zmi_icon"
+     file="newspaper.png"
+     for="..interfaces.INewsWorkspaceFactory" />
+
+  <browser:icon
+     name="zmi_icon"
+     file="newspaper_go.png"
+     for="..interfaces.INewsRssFeed" />
+
+  <!-- news item -->
+  <zojax:pagelet
+     name="index.html"
+     for="..interfaces.INewsItem"
+     template="newsitemview.pt"
+     class=".newsitem.NewsItemPage"
+     provides="zojax.content.type.interfaces.IContentView"
+     permission="zope.View" />
+
+  <!-- news category -->
+  <zojax:pagelet
+     name="index.html"
+     for="..interfaces.ICategory"
+     template="category.pt"
+     class=".category.CategoryPage"
+     permission="zope.View" />
+
+  <!-- actions -->
+  <adapter
+     name="rss.news"
+     provides=".actions.IRSSNewsItemsAction"
+     factory=".actions.RSSNewsItemsAction" />
+
+  <browser:icon
+     name="zmi_icon"
+     file="rss.png"
+     for=".actions.IRSSNewsItemsAction" />
+
+  <!-- icons -->
+  <browser:icon
+     name="zmi_icon"
+     file="newspaper.png"
+     for="..interfaces.INewsItem" />
+
+  <browser:icon
+     name="zmi_icon"
+     file="newspaper.png"
+     for="..interfaces.INewsItemType" />
+
+  <!-- drafts -->
+  <include file="draft.zcml" />
+
+</configure>

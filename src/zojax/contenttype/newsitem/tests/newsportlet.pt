@@ -1,0 +1,5 @@
+<tal:block content="structure portlet:contenttypes.newsitems" />
+
+<tal:block content="structure portlet:contenttypes.newscategories" />
+
+<tal:block content="structure portlet:portlet.actions" />
