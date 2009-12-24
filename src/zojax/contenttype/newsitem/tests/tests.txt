@@ -1,0 +1,356 @@
+=========
+News Item
+=========
+
+    >>> from zope import component, interface, event
+    >>> from zope.testbrowser.testing import Browser
+    >>> from zope.app.component.hooks import setSite
+    >>> from zope.lifecycleevent import ObjectCreatedEvent
+    >>> from zojax.content.space.content import ContentSpace
+
+    >>> root = getRootFolder()
+    >>> setSite(root)
+    >>> space = ContentSpace(title=u'Space')
+    >>> event.notify(ObjectCreatedEvent(space))
+    >>> root['space'] = space
+    >>> _t = root['intids'].register(root['space'])
+    >>> root['catalog'].updateIndexes()
+
+    >>> actor = Browser()
+    >>> actor.handleErrors = False
+    >>> actor.addHeader("Authorization", "Basic mgr:mgrpw")
+
+Install product
+
+    >>> actor.open("http://localhost/settings/")
+    >>> actor.getLink('Products management').click()
+    >>> actor.getControl(name='availproducts:list').value = ['zojax-contenttypes']
+    >>> actor.getControl(name='install').click()
+
+Setup news workspace
+
+    >>> actor.open("http://localhost/space/context.html/content/")
+    >>> actor.getLink('Workspaces').click()
+    >>> actor.getControl(name="workspaces.widgets.workspaces:list").value = ['news']
+    >>> actor.getControl(name="content.edit.buttons.save").click()
+
+
+Add News Item
+-------------
+
+    >>> actor.open("http://localhost/space/news/context.html/contents/")
+    >>> actor.getLink('News Item').click()
+
+    >>> actor.getControl('Title').value = u'Test news item'
+    >>> actor.getControl('Date').value = u'03/01/01 10:00'
+    >>> actor.getControl('Body').value = u'News item body'
+    >>> actor.getControl('Publish').click()
+
+
+View
+----
+
+    >>> print actor.contents
+    <!DOCTYPE html PUBLIC
+    ...
+    ...<h1 class="z-content-title">Test news item</h1>...
+    ...
+    <div>
+      News item body
+    </div>
+    ...
+    <span class="discreet">Date:</span>
+    Wednesday, January 01, 2003
+    ...
+    </html>
+
+Edit
+----
+
+    >>> actor.getLink(url='context.html').click()
+    >>> actor.getControl('Title').value = 'News item'
+    >>> actor.getControl(name='content.edit.buttons.save').click()
+
+    >>> actor.getLink('View').click()
+    >>> print actor.contents
+    <!DOCTYPE html PUBLIC
+    ...
+    ...<h1 class="z-content-title">News item</h1>...
+    ...
+    News item body
+    ...
+    <span class="discreet">Date:</span>
+    Wednesday, January 01, 2003
+    ...
+    </html>
+
+
+Contents
+--------
+
+    >>> actor.open('http://localhost/space/news/context.html/contents/')
+    >>> print actor.contents
+    <!DOCTYPE html...
+    ...
+    <td>News item</td>
+    <td>1 KB</td>
+    <td>...</td>
+    <td>...</td>
+    ...
+    </html>
+
+
+News categories
+---------------
+
+    >>> actor.getLink('Category').click()
+    >>> actor.getControl('Title').value = 'Category 1'
+    >>> actor.getControl('Add').click()
+    >>> actor.getControl('Title').value = 'Category 2'
+    >>> actor.getControl('Add').click()
+    >>> actor.getControl('Title').value = 'Category 3'
+    >>> actor.getControl('Add').click()
+
+    >>> print actor.contents
+    <!DOCTYPE html...
+    ...
+    <td>Category 1</td>
+    ...
+    <td>Category 2</td>
+    ...
+    <td>Category 3</td>
+    ...
+    </html>
+
+    >>> from zope.schema.interfaces import IVocabularyFactory
+    >>> sm = getRootFolder().getSiteManager()
+    >>> vocFactory = sm.getUtility(
+    ...     IVocabularyFactory,
+    ...     name='zojax.contenttype.newsitem-categories')
+
+    >>> for term in vocFactory(getRootFolder()['space']):
+    ...     print (term.value, term.title)
+    (..., u'Category 1')
+    (..., u'Category 2')
+    (..., u'Category 3')
+
+    >>> actor.getControl(name="ids:list").value = ["Category-2"]
+    >>> actor.getControl(name="form.buttons.delete").click()
+    >>> print actor.contents
+    <!DOCTYPE html...
+    ...
+    <td>Category 1</td>
+    ...
+    <td>Category 3</td>
+    ...
+    </html>
+
+    >>> voc = list(vocFactory(getRootFolder()['space']))
+    >>> for term in voc:
+    ...     print (term.value, term.title)
+    (..., u'Category 1')
+    (..., u'Category 3')
+
+    >>> cat1 = voc[0].value
+    >>> cat2 = voc[1].value
+
+    >>> vocFactory = sm.getUtility(
+    ...     IVocabularyFactory,
+    ...     name='zojax.contenttype.newsitem-portal-categories')
+
+    >>> for term in vocFactory(getRootFolder()['space']):
+    ...     print (term.value, term.title)
+    (..., u'Category 1')
+    (..., u'Category 3')
+
+
+News
+----
+
+    >>> actor.open('http://localhost/space/news/context.html/contents/')
+    >>> actor.getLink('News Item').click()
+
+    >>> actor.getControl('Title').value = u'News item 2'
+    >>> actor.getControl('Date').value = u'03/02/01 10:00'
+    >>> actor.getControl('Body').value = u'News item body'
+    >>> actor.getControl(name="form.widgets.category:list").value = [str(cat1)]
+    >>> actor.getControl('Publish').click()
+
+    >>> actor.open("http://localhost/space/news/")
+    >>> print actor.contents
+    <!DOCTYPE html ...
+    ...
+    <a title="News rss feed" href="http://localhost/space/news/@@feeds/news">
+      <img ... />
+    </a>
+    ...
+    ...News...
+    ...<a href="http://localhost/space/news/news-item/">News item 2</a>...
+    ...<span class="discreet">Date:</span>
+    Saturday, February 01, 2003...
+    ...
+    ...<a href="http://localhost/space/news/test-news-item/">News item</a>...
+    ...<span class="discreet">Date:</span>
+    Wednesday, January 01, 2003...
+    ...
+    </html>
+
+
+News workspace rss feed
+-----------------------
+
+    >>> actor.open('http://localhost/space/news/@@feeds/news')
+    >>> print actor.contents
+    <?xml version="1.0" encoding="UTF-8"?>
+    <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+      <channel>
+        <title>News - News</title>
+        <link>http://localhost/space/news/</link>
+        <description>Information about latest site news.</description>
+        <atom:link rel="self" type="application/rss+xml"
+                   href="http://localhost/space/news/@@feeds/news"/>
+        <item>
+          <title>News item 2</title>
+          <description></description>
+          <guid isPermaLink="true">http://localhost/space/news/news-item/</guid>
+          <author> (Manager)</author>
+          <pubDate>Sat, 01 Feb 2003 ... GMT</pubDate>
+        </item>
+        <item>
+          <title>News item</title>
+          <description></description>
+          <guid isPermaLink="true">http://localhost/space/news/test-news-item/</guid>
+          <author> (Manager)</author>
+          <pubDate>Wed, 01 Jan 2003 ... GMT</pubDate>
+        </item>
+      </channel>
+    </rss>
+
+News portlet
+------------
+
+    >>> actor.open("http://localhost/space/newsportlet.html")
+    >>> print actor.contents
+    <!DOCTYPE html...
+    ...
+    ...<div class="z-portlet portlet-newsitems">
+    <h2 class="z-portlet-header">
+       <a class="z-portlet-feed" title="News rss feed" href="http://localhost/space/@@feeds/news">
+         <img src="http://localhost/@@/rss-icon.png" />
+       </a>
+       <a href="http://localhost/space/news/">News</a>
+    </h2>
+    <div class="z-portlet-body">
+      <div class="z-portlet-item even">
+        <span>
+          <a href="http://localhost/space/news/news-item/" title="">News item 2</a>
+        </span>
+        <div class="z-portlet-item-details">
+          Feb 01, 2003
+          <br />
+          <a href="http://localhost/space/news/category/Category">Category 1</a>
+        </div>
+      </div> <div class="z-portlet-item odd">
+        <span>
+          <a href="http://localhost/space/news/test-news-item/" title="">News item</a>
+        </span>
+        <div class="z-portlet-item-details">
+          Jan 01, 2003
+        </div>
+      </div>
+    </div>
+    <div class="z-portlet-footer">
+      <a href="http://localhost/space/news/">More news...</a>
+    </div>
+    ...
+    </html>
+
+
+Categories portlet
+------------------
+
+    >>> print actor.contents
+    <!DOCTYPE html...
+    ...
+    ...<div class="z-portlet portlet-news-category">
+      <h2 class="z-portlet-header">News categories</h2>
+      <div class="z-portlet-body">
+        <div class="z-portlet-item">
+          <ul>
+            <li>
+               <a href="http://localhost/space/news/category/Category">Category 1</a>
+            </li> <li>
+               <a href="http://localhost/space/news/category/Category-3">Category 3</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    ...
+    </html>
+
+    >>> actor.getLink('Category 1').click()
+    >>> print actor.contents
+    <!DOCTYPE html...
+    ...
+    <div class="z-listing">
+       <h2><a href="http://localhost/space/news/news-item/">News item 2</a></h2>
+       <div style="padding-bottom: 0.5em">
+          <span class="discreet">Date:</span>
+             Saturday, February 01, 2003
+          </div>
+       <div class="description"></div>
+       <br /><br />
+    </div>
+    ...
+    </html>
+
+
+News rss feed
+-------------
+
+    >>> actor.open('http://localhost/space/@@feeds/news')
+    >>> print actor.contents
+    <?xml version="1.0" encoding="UTF-8"?>
+    <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+      <channel>
+        <title>News - Space</title>
+        <link>http://localhost/space/</link>
+        <description>Information about latest site news.</description>
+        <atom:link rel="self" type="application/rss+xml"
+                   href="http://localhost/space/@@feeds/news"/>
+        <item>
+          <title>News item 2</title>
+          <description></description>
+          <guid isPermaLink="true">http://localhost/space/news/news-item/</guid>
+          <author> (Manager)</author>
+          <pubDate>...</pubDate>
+        </item>
+        <item>
+          <title>News item</title>
+          <description></description>
+          <guid isPermaLink="true">http://localhost/space/news/test-news-item/</guid>
+          <author> (Manager)</author>
+          <pubDate>...</pubDate>
+        </item>
+      </channel>
+    </rss>
+
+
+Searchable text
+---------------
+
+    >>> from zope.index.text.interfaces import ISearchableText
+    >>> from zojax.contenttype.newsitem.newsitem import SearchableText
+    >>> searchable = SearchableText(root['space']['news']['test-news-item'])
+    >>> searchable.getSearchableText()
+    u'News item News item body'
+
+
+Unistall product
+
+    >>> actor.open("http://localhost/settings/")
+    >>> actor.getLink('Products management').click()
+    >>> actor.getControl(name='products:list').value = ['zojax-contenttypes']
+    >>> actor.getControl(name='uninstall').click()
+    >>> setSite(None)
+

@@ -1,0 +1,29 @@
+<tal:block i18n:domain="zojax.contenttypes">
+  <h1 >
+    <tal:block i18n:translate="">News</tal:block>,
+    <tal:block content="context/title" />
+  </h1>
+  <br />
+
+  <tal:block condition="view/news">
+    <tal:block tal:content="structure view/news/@@pagelet" />
+    
+    <div class="z-listing" tal:repeat="item view/news">
+      <h2><a tal:content="item/title" 
+	     tal:attributes="href string:${item/@@absolute_url}/"></a></h2>
+      <div style="padding-bottom: 0.5em">
+	<span class="discreet" i18n:translate="">Date:</span>
+	<tal:block content="structure formatter:date,full:item/date" />
+      </div>
+      <div class="description" tal:content="item/description"></div>
+      <br /><br />
+    </div>
+  </tal:block>
+
+  <tal:block tal:condition="not:view/news">
+    <br />
+    <p i18n:translate="">
+      There are no new news in this category.
+    </p>
+  </tal:block>
+</tal:block>

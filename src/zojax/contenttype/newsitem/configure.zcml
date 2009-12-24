@@ -1,0 +1,114 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:zojax="http://namespaces.zope.org/zojax"
+   xmlns:zcml="http://namespaces.zope.org/zcml"
+   i18n_domain="zojax.contenttypes">
+
+  <permission
+     id="zojax.contenttype.AddNewsItem"
+     title="Add news item"
+     description="Allow add new news item to portal." />
+
+  <permission
+     id="zojax.contenttype.SubmitNewsItem"
+     title="Submit news item"
+     description="Allow submit news item to portal." />
+
+  <interface
+     name="News Item"
+     interface=".interfaces.INewsItemType"
+     type="zojax.content.type.interfaces.IContentTypeType" />
+
+  <registerIn registry="zojax.product.zojax-contenttypes">
+
+    <zojax:content
+       title="News Item"
+       name="contenttype.newsitem"
+       description="An announcement that will show up on the news portlet and in the news listing."
+       schema=".interfaces.INewsItem"
+       class=".newsitem.NewsItem"
+       contenttype=".interfaces.INewsItemType"
+       containers="workspace.news"
+       type=".interfaces.INewsItemType
+	     zojax.content.type.interfaces.IActivePortalType"
+       permission="zojax.contenttype.AddNewsItem" />
+
+    <class class=".newsitem.NewsItem">
+      <implements interface="zojax.ownership.interfaces.IOwnerAware" />
+      <implements interface="zojax.content.type.interfaces.ISearchableContent" />
+      <implements interface="zojax.content.type.interfaces.IContentNamesContainer" />
+      <implements interface="zojax.content.type.interfaces.ITitleBasedName" />
+
+      <require
+	 permission="zope.View"
+	 interface=".interfaces.INewsItem" />
+      
+      <require
+	 permission="zojax.ModifyContent"
+	 set_schema=".interfaces.INewsItem" />
+    </class>
+    
+    <adapter factory=".newsitem.Sized" />
+    <adapter factory=".newsitem.SearchableText" />
+
+    <!-- indexes -->
+    <utility
+       name="contentTypeNewsCategoryIds"
+       provides="zojax.catalog.interfaces.ICatalogIndexFactory"
+       component=".index.indexNewsCategoryIds" />
+
+    <!-- news rss feed -->
+    <adapter 
+       name="news"
+       factory=".feeds.NewsRssFeed" />
+
+    <class class=".feeds.NewsRssFeed">
+      <require
+	 permission="zope.View"
+	 interface="zojax.content.feeds.interfaces.IFeed" />
+    </class>
+
+    <adapter 
+       name="news"
+       factory=".feeds.NewsWorkspaceRssFeed" />
+
+    <class class=".feeds.NewsWorkspaceRssFeed">
+      <require
+	 permission="zope.View"
+	 interface="zojax.content.feeds.interfaces.IFeed" />
+    </class>
+
+    <!-- cache -->
+    <subscriber handler=".cache.newsItemHandler" />
+
+    <subscriber
+       for=".interfaces.INewsItemType
+	    zope.app.container.interfaces.IObjectMovedEvent"
+       handler=".cache.newsItemHandler" />
+
+    <!-- draft -->
+    <include file="draft.zcml" />
+
+    <!-- workspace -->
+    <include file="workspace.zcml" />
+
+    <!-- news item categories -->
+    <include file="category.zcml" />
+
+    <!-- portlets -->
+    <include package=".portlets" />
+
+    <!-- browser views -->
+    <include package=".browser" />
+  </registerIn>
+
+  <!-- capabilities -->
+  <include file="capability.zcml" />
+
+  <!-- generations -->
+  <utility
+     name="zojax.contenttype.newsitem"
+     provides="zope.app.generations.interfaces.ISchemaManager"
+     component=".generations.schemaManager" />
+
+</configure>

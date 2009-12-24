@@ -1,0 +1,40 @@
+<div class="z-portlet portlet-newsitems" i18n:domain="zojax.contenttypes"
+     tal:define="context view/context/context;
+     url context/@@absolute_url">
+  <h2 class="z-portlet-header">
+    <a class="z-portlet-feed" title="News rss feed"
+       tal:attributes="href string:$url/@@feeds/news">
+      <img tal:attributes="src context/++resource++rss-icon.png" />
+    </a>
+    <a tal:attributes="href string:$url/news/" i18n:translate=""
+       tal:content="view/context/label" tal:condition="view/context/label">News</a>
+    <a tal:attributes="href string:$url/news/" i18n:translate=""
+       tal:condition="not:view/context/label">News</a>
+  </h2>
+  <div class="z-portlet-body">
+    <div tal:repeat="item view/context/news"
+   tal:attributes="class python:repeat['item'].odd() and
+       'z-portlet-item odd' or 'z-portlet-item even'">
+      <span>
+  <a tal:content="item/title"
+     tal:attributes="href string:${item/@@absolute_url}/;
+         title item/description|nothing"></a>
+      </span>
+      <div class="z-portlet-item-details">
+        <tal:block content="structure formatter:date,medium:item/date" />
+        <tal:block define="categories python:view.context.getCategories(item)"
+             condition="categories">
+        <br/>
+          <tal:block tal:repeat="category categories">
+            <a tal:content="category/title"
+               tal:attributes="href category/@@absolute_url">
+              Category</a><tal:block condition="not:repeat/category/end">,</tal:block>
+          </tal:block>
+        </tal:block>
+      </div>
+    </div>
+  </div>
+  <div class="z-portlet-footer">
+    <a tal:attributes="href string:$url/news/" i18n:translate="">More news...</a>
+  </div>
+</div>
