@@ -1,4 +1,4 @@
-<div class="z-portlet portlet-news-category" i18n:domain="zojax.contenttypes">
+<div class="z-portlet portlet-news-category" i18n:domain="zojax.contenttype.newsitem">
 
   <h2 class="z-portlet-header" i18n:translate="">News categories</h2>
 

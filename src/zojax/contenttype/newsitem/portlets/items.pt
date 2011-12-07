@@ -1,8 +1,8 @@
-<div class="z-portlet portlet-newsitems" i18n:domain="zojax.contenttypes"
+<div class="z-portlet portlet-newsitems" i18n:domain="zojax.contenttype.newsitem"
      tal:define="context view/context/context;
      url context/@@absolute_url">
   <h2 class="z-portlet-header">
-    <a class="z-portlet-feed" title="News rss feed"
+    <a class="z-portlet-feed" title="News rss feed" i18n:attributes="title"
        tal:attributes="href string:$url/@@feeds/news">
       <img tal:attributes="src context/++resource++rss-icon.png" />
     </a>
