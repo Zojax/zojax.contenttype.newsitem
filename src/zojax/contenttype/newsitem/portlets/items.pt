@@ -6,7 +6,7 @@
        tal:attributes="href string:$url/@@feeds/news">
       <img tal:attributes="src context/++resource++rss-icon.png" />
     </a>
-    <a tal:attributes="href string:$url/news/" i18n:translate=""
+    <a tal:attributes="href string:$url/news/"
        tal:content="view/context/label" tal:condition="view/context/label">News</a>
     <a tal:attributes="href string:$url/news/" i18n:translate=""
        tal:condition="not:view/context/label">News</a>
