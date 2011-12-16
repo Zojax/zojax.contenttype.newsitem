@@ -1,0 +1,234 @@
+##############################################################################
+#
+# Copyright (c) 2003-2004 Zope Corporation and Contributors.
+# All Rights Reserved.
+#
+# This software is subject to the provisions of the Zope Public License,
+# Version 2.1 (ZPL).  A copy of the ZPL should accompany this distribution.
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
+# WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
+# FOR A PARTICULAR PURPOSE.
+#
+##############################################################################
+msgid ""
+msgstr ""
+"Project-Id-Version: Development/Unknown\n"
+"POT-Creation-Date: Sun Dec 11 10:51:53 2011\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Zope 3 Developers <zope3-dev@zope.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: zope/app/locales/extract.py\n"
+
+#: src/zojax/contenttype/newsitem/browser/actions.py:36
+#: src/zojax/contenttype/newsitem/portlets/items.pt:5
+msgid "News rss feed"
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/browser/category.pt:25
+msgid "There are no new news in this category."
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/browser/draft.py:30
+#: src/zojax/contenttype/newsitem/interfaces.py:51
+#: src/zojax/contenttype/newsitem/category.zcml:7
+msgid "Category"
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/browser/draft.py:35
+msgid "Add category"
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/browser/draft.py:47
+msgid "Add"
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/browser/draft.py:51
+msgid "Please fix indicated error."
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/browser/draft.py:55
+msgid "Category has been added."
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/browser/newsitemview.pt:2
+msgid "This item does not have any body text, click the edit tab to change it."
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/browser/newslisting.pt:12
+msgid "Categories:"
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/browser/newslisting.pt:27
+msgid "There are no new news."
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/browser/newslisting.pt:8
+msgid "Date:"
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/category.py:47
+#: src/zojax/contenttype/newsitem/portlets/interfaces.py:36
+#: src/zojax/contenttype/newsitem/browser/draftcategory.pt:1
+msgid "Categories"
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/category.zcml:28
+msgid "Category container"
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/configure.zcml:12
+msgid "Allow submit news item to portal."
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/configure.zcml:12
+msgid "Submit news item"
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/configure.zcml:24
+msgid "An announcement that will show up on the news portlet and in the news listing."
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/configure.zcml:24
+msgid "News Item"
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/configure.zcml:7
+msgid "Add news item"
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/configure.zcml:7
+msgid "Allow add new news item to portal."
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/feeds.py:37
+#: src/zojax/contenttype/newsitem/feeds.py:73
+#: src/zojax/contenttype/newsitem/workspace.py:40
+#: src/zojax/contenttype/newsitem/workspace.py:95
+#: src/zojax/contenttype/newsitem/portlets/items.pt:11
+#: src/zojax/contenttype/newsitem/browser/category.pt:3
+#: src/zojax/contenttype/newsitem/browser/news.pt:3
+msgid "News"
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/feeds.py:38
+#: src/zojax/contenttype/newsitem/feeds.py:74
+#: src/zojax/contenttype/newsitem/portlets/configure.zcml:6
+msgid "Information about latest site news."
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/interfaces.py:31
+msgid "Title"
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/interfaces.py:32
+msgid "News item title."
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/interfaces.py:36
+msgid "Description"
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/interfaces.py:37
+msgid "News item description."
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/interfaces.py:41
+msgid "Date"
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/interfaces.py:42
+msgid "News date"
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/interfaces.py:46
+msgid "Body"
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/interfaces.py:47
+msgid "News item text."
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/interfaces.py:52
+msgid "Select category for the news item."
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/interfaces.py:74
+msgid "Page size"
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/interfaces.py:75
+msgid "Number of news items per page."
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/interfaces.py:80
+msgid "Sub spaces"
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/interfaces.py:81
+msgid "Show news for all sub-spaces or just for current space."
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/portlets/category.pt:3
+msgid "News categories"
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/portlets/configure.zcml:18
+msgid "News Categories"
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/portlets/configure.zcml:18
+msgid "Listing of news categories."
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/portlets/configure.zcml:6
+msgid "News Items"
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/portlets/interfaces.py:27
+msgid "Label"
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/portlets/interfaces.py:31
+msgid "Number of news items"
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/portlets/interfaces.py:37
+msgid "Filter news items by their category. If no category selected, no filtering will be performed."
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/portlets/interfaces.py:45
+msgid "News source"
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/portlets/items.pt:38
+msgid "More news..."
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/portlets/vocabulary.py:34
+msgid "Current space"
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/portlets/vocabulary.py:35
+msgid "Current space and subspaces"
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/portlets/vocabulary.py:36
+msgid "All spaces"
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/workspace.py:76
+msgid "news item"
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/workspace.py:96
+msgid "A news workspace that will show all space news."
+msgstr ""
+
+#: src/zojax/contenttype/newsitem/workspace.zcml:11
+msgid "News Workspace"
+msgstr ""
+
