@@ -1,0 +1,39 @@
+##############################################################################
+#
+# Copyright (c) 2003-2004 Zope Corporation and Contributors.
+# All Rights Reserved.
+#
+# This software is subject to the provisions of the Zope Public License,
+# Version 2.1 (ZPL).  A copy of the ZPL should accompany this distribution.
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
+# WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
+# FOR A PARTICULAR PURPOSE.
+#
+##############################################################################
+msgid ""
+msgstr ""
+"Project-Id-Version: Development/Unknown\n"
+"POT-Creation-Date: Sun Dec 11 10:51:53 2011\n"
+"PO-Revision-Date: 2012-04-15 13:30-0500\n"
+"Last-Translator: Mariné Pérez <marine.perez@gmail.com>\n"
+"Language-Team: Zope 3 Developers <zope3-dev@zope.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: zope/app/locales/extract.py\n"
+
+#: src/zojax/contenttype/newsitem/browser/newslisting.pt:8
+msgid "Date:"
+msgstr "Fecha:"
+
+#: src/zojax/contenttype/newsitem/feeds.py:37
+#: src/zojax/contenttype/newsitem/feeds.py:73
+#: src/zojax/contenttype/newsitem/workspace.py:40
+#: src/zojax/contenttype/newsitem/workspace.py:95
+#: src/zojax/contenttype/newsitem/portlets/items.pt:11
+#: src/zojax/contenttype/newsitem/browser/category.pt:3
+#: src/zojax/contenttype/newsitem/browser/news.pt:3
+msgid "News"
+msgstr "Noticias"
+
