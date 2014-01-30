@@ -42,25 +42,21 @@ Add News Item
     >>> actor.getLink('News Item').click()
 
     >>> actor.getControl('Title').value = u'Test news item'
-    >>> actor.getControl('Date').value = u'03/01/01 10:00'
+    >>> actor.getControl('Date').value = u'03/01/01 10:00 AM'
     >>> actor.getControl('Body').value = u'News item body'
     >>> actor.getControl('Publish').click()
 
 
 View
 ----
-
     >>> print actor.contents
-    <!DOCTYPE html PUBLIC
+    <!DOCTYPE html PUBLIC ...
     ...
-    ...<h1 class="z-content-title">Test news item</h1>...
+    </div><h1 class="z-content-title">Test news item</h1>
     ...
-    <div>
-      News item body
-    </div>
-    ...
-    <span class="discreet">Date:</span>
-    Wednesday, January 01, 2003
+      <div>
+        News item body
+      </div>
     ...
     </html>
 
@@ -73,16 +69,17 @@ Edit
 
     >>> actor.getLink('View').click()
     >>> print actor.contents
-    <!DOCTYPE html PUBLIC
+    <!DOCTYPE html PUBLIC ...
     ...
-    ...<h1 class="z-content-title">News item</h1>...
+    </div><h1 class="z-content-title">News item</h1>
     ...
-    News item body
-    ...
-    <span class="discreet">Date:</span>
-    Wednesday, January 01, 2003
+      <div class="z-contenttypes-newsdate">
+        <span class="discreet">Date:</span>
+        <span class="zojax-formatter-date" value="March 01, 2001 10:00:00 " format="full">Thursday, March 01, 2001</span>
     ...
     </html>
+
+
 
 
 Contents
@@ -98,6 +95,7 @@ Contents
     <td>...</td>
     ...
     </html>
+
 
 
 News categories
@@ -171,7 +169,7 @@ News
     >>> actor.getLink('News Item').click()
 
     >>> actor.getControl('Title').value = u'News item 2'
-    >>> actor.getControl('Date').value = u'03/02/01 10:00'
+    >>> actor.getControl('Date').value = u'03/02/01 10:00 AM'
     >>> actor.getControl('Body').value = u'News item body'
     >>> actor.getControl(name="form.widgets.category:list").value = [str(cat1)]
     >>> actor.getControl('Publish').click()
@@ -187,11 +185,11 @@ News
     ...News...
     ...<a href="http://localhost/space/news/news-item/">News item 2</a>...
     ...<span class="discreet">Date:</span>
-    Saturday, February 01, 2003...
+    ...Friday, March 02, 2001...
     ...
     ...<a href="http://localhost/space/news/test-news-item/">News item</a>...
     ...<span class="discreet">Date:</span>
-    Wednesday, January 01, 2003...
+    ...Thursday, March 01, 2001...
     ...
     </html>
 
@@ -204,27 +202,30 @@ News workspace rss feed
     <?xml version="1.0" encoding="UTF-8"?>
     <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
       <channel>
-        <title>News - News</title>
+        <title>News - News
+    </title>
         <link>http://localhost/space/news/</link>
         <description>Information about latest site news.</description>
         <atom:link rel="self" type="application/rss+xml"
                    href="http://localhost/space/news/@@feeds/news"/>
         <item>
           <title>News item 2</title>
-          <description></description>
+          <description type="html"><![CDATA[]]></description>
           <guid isPermaLink="true">http://localhost/space/news/news-item/</guid>
           <author> (Manager)</author>
-          <pubDate>Sat, 01 Feb 2003 ... GMT</pubDate>
+          <pubDate>Fri, 02 Mar 2001 ... GMT</pubDate>
         </item>
         <item>
           <title>News item</title>
-          <description></description>
+          <description type="html"><![CDATA[]]></description>
           <guid isPermaLink="true">http://localhost/space/news/test-news-item/</guid>
           <author> (Manager)</author>
-          <pubDate>Wed, 01 Jan 2003 ... GMT</pubDate>
+          <pubDate>Thu, 01 Mar 2001 ... GMT</pubDate>
         </item>
       </channel>
     </rss>
+    <BLANKLINE>
+
 
 News portlet
 ------------
@@ -233,37 +234,38 @@ News portlet
     >>> print actor.contents
     <!DOCTYPE html...
     ...
-    ...<div class="z-portlet portlet-newsitems">
-    <h2 class="z-portlet-header">
-       <a class="z-portlet-feed" title="News rss feed" href="http://localhost/space/@@feeds/news">
-         <img src="http://localhost/@@/rss-icon.png" />
-       </a>
-       <a href="http://localhost/space/news/">News</a>
-    </h2>
-    <div class="z-portlet-body">
-      <div class="z-portlet-item even">
-        <span>
-          <a href="http://localhost/space/news/news-item/" title="">News item 2</a>
-        </span>
-        <div class="z-portlet-item-details">
-          Feb 01, 2003
-          <br />
-          <a href="http://localhost/space/news/category/Category">Category 1</a>
-        </div>
-      </div> <div class="z-portlet-item odd">
-        <span>
-          <a href="http://localhost/space/news/test-news-item/" title="">News item</a>
-        </span>
-        <div class="z-portlet-item-details">
-          Jan 01, 2003
+      <h2 class="z-portlet-header">
+        <a class="z-portlet-feed" title="News rss feed" href="http://localhost/space/@@feeds/news">
+          <img src="http://localhost/@@/rss-icon.png" />
+        </a>
+        <a href="http://localhost/space/news/">News</a>
+      </h2>
+      <div class="z-portlet-body">
+        <div class="z-portlet-item even">
+          <span>
+      <a href="http://localhost/space/news/news-item/" title="">News item 2</a>
+          </span>
+          <div class="z-portlet-item-details">
+            <span class="zojax-formatter-date" value="March 02, 2001 10:00:00 " format="medium">Mar 02, 2001</span>
+            <br />
+                <a href="http://localhost/space/news/category/Category">Category 1</a>
+          </div>
+        </div> <div class="z-portlet-item odd">
+          <span>
+      <a href="http://localhost/space/news/test-news-item/" title="">News item</a>
+          </span>
+          <div class="z-portlet-item-details">
+            <span class="zojax-formatter-date" value="March 01, 2001 10:00:00 " format="medium">Mar 01, 2001</span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="z-portlet-footer">
-      <a href="http://localhost/space/news/">More news...</a>
-    </div>
+      <div class="z-portlet-footer">
+        <a href="http://localhost/space/news/">More news...</a>
+      </div>
     ...
     </html>
+
+
 
 
 Categories portlet
@@ -290,20 +292,19 @@ Categories portlet
 
     >>> actor.getLink('Category 1').click()
     >>> print actor.contents
-    <!DOCTYPE html...
+    <!DOCTYPE html PUBLIC ...
     ...
-    <div class="z-listing">
-       <h2><a href="http://localhost/space/news/news-item/">News item 2</a></h2>
-       <div style="padding-bottom: 0.5em">
-          <span class="discreet">Date:</span>
-             Saturday, February 01, 2003
+        <div class="z-listing">
+          <h2><a href="http://localhost/space/news/news-item/">News item 2</a></h2>
+          <div style="padding-bottom: 0.5em">
+    	<span class="discreet">Date:</span>
+    	<span class="zojax-formatter-date" value="March 02, 2001 10:00:00 " format="full">Friday, March 02, 2001</span>
           </div>
-       <div class="description"></div>
-       <br /><br />
-    </div>
+          <div class="description"></div>
+          <br /><br />
+        </div>
     ...
     </html>
-
 
 News rss feed
 -------------
@@ -313,27 +314,33 @@ News rss feed
     <?xml version="1.0" encoding="UTF-8"?>
     <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
       <channel>
-        <title>News - Space</title>
+        <title>News - Space
+    </title>
         <link>http://localhost/space/</link>
         <description>Information about latest site news.</description>
         <atom:link rel="self" type="application/rss+xml"
                    href="http://localhost/space/@@feeds/news"/>
         <item>
           <title>News item 2</title>
-          <description></description>
+          <description type="html"><![CDATA[]]></description>
           <guid isPermaLink="true">http://localhost/space/news/news-item/</guid>
+    <BLANKLINE>
           <author> (Manager)</author>
+    <BLANKLINE>
           <pubDate>...</pubDate>
         </item>
         <item>
           <title>News item</title>
-          <description></description>
+          <description type="html"><![CDATA[]]></description>
           <guid isPermaLink="true">http://localhost/space/news/test-news-item/</guid>
+    <BLANKLINE>
           <author> (Manager)</author>
+    <BLANKLINE>
           <pubDate>...</pubDate>
         </item>
       </channel>
     </rss>
+    <BLANKLINE>
 
 
 Searchable text
